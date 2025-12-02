@@ -14,7 +14,7 @@ We will use **Java 21+** with **Spring Boot 4** (Trying the latest features).
     *   **Security**: Spring Security + JWT (Stateless Authentication).
 
 2.  **Chat Service**:
-    *   **Framework**: Spring Boot 4 (WebFlux or Web MVC with WebSocket).
+    *   **Framework**: Spring Boot 4 (Web MVC with **Virtual Threads** enabled).
     *   **Database**: **MongoDB** (NoSQL) - High write throughput, flexible schema for messages.
     *   **Real-time**: Spring WebSocket (STOMP protocol).
     *   **Message Broker**: **Redis** (Pub/Sub) - Critical for horizontal scalability. Allows multiple Chat Service instances to broadcast messages to users connected to different nodes.
@@ -27,8 +27,8 @@ We will use **Java 21+** with **Spring Boot 4** (Trying the latest features).
 
 ### Infrastructure & DevOps
 *   **Containerization**: Docker & Docker Compose.
-*   **Gateway**: Spring Cloud Gateway (Optional for MVP, but recommended for routing).
-*   **Service Discovery**: Eureka or Consul (Optional for MVP, can use DNS/Docker internal networking initially).
+*   **Gateway**: **None** (For development, we will use **Vite Proxy** to route requests to backend services. In production, a simple Nginx reverse proxy is sufficient).
+*   **Service Discovery**: **None** (Using Docker internal DNS for service resolution).
 
 ## Directory Structure
 
