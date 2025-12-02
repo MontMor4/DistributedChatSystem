@@ -1,0 +1,53 @@
+services:
+  # Relational Database for Auth Service
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: chat-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chat-network
+
+  # NoSQL Database for Chat Service (Messages)
+  mongo-db:
+    image: mongo:7.0
+    container_name: chat-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - chat-network
+
+  # Message Broker for Chat Service Scalability (Pub/Sub)
+  redis-broker:
+    image: redis:7.2-alpine
+    container_name: chat-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - chat-network
+
+volumes:
+  postgres_data:
+  mongo_data:
+  redis_data:
+
+
+networks:
+  chat-network:
+    driver: bridge
