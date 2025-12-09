@@ -1,13 +1,5 @@
 package com.chat.auth.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginRequest {
-    private String username;
-    private String password;
-}
+public record LoginRequest(@NotEmpty String username, @NotEmpty String password) { }

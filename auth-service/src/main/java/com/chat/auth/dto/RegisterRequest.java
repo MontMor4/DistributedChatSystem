@@ -1,14 +1,6 @@
 package com.chat.auth.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class RegisterRequest {
-    private String username;
-    private String password;
-    private String fullName;
+public record RegisterRequest(@NotEmpty String username, @NotEmpty String password, @NotEmpty String fullName) {
 }

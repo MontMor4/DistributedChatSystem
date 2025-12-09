@@ -61,8 +61,8 @@ class AuthServiceTest {
         AuthResponse response = authService.register(request);
 
         assertNotNull(response);
-        assertEquals("jwt_token", response.getToken());
-        assertEquals("testuser", response.getUsername());
+        assertEquals("jwt_token", response.token());
+        assertEquals("testuser", response.username());
         verify(userRepository, times(1)).save(any(User.class));
     }
 
@@ -90,7 +90,7 @@ class AuthServiceTest {
         AuthResponse response = authService.login(request);
 
         assertNotNull(response);
-        assertEquals("jwt_token", response.getToken());
+        assertEquals("jwt_token", response.token());
         verify(authenticationManager, times(1)).authenticate(any());
     }
 }

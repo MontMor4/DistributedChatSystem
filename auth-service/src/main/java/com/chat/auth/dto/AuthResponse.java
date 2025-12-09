@@ -1,18 +1,8 @@
 package com.chat.auth.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class AuthResponse {
-    private String token;
-    private UUID userId;
-    private String username;
+public record AuthResponse(@NonNull String token, @NonNull UUID userId, @NonNull String username) {
 }

@@ -1,0 +1,12 @@
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/AuthServiceApplication.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/config/SecurityConfig.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/controller/AuthController.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/controller/GlobalExceptionController.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/dto/AuthResponse.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/dto/LoginRequest.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/dto/RegisterRequest.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/model/User.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/repository/UserRepository.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/security/JwtUtil.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/service/AuthService.java
+/home/guilhermeaug/Projetos/SistemasDistribuidos/DistributedChatSystem/auth-service/src/main/java/com/chat/auth/service/CustomUserDetailsService.java

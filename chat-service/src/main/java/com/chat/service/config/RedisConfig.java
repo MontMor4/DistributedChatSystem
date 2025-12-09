@@ -1,6 +1,7 @@
 package com.chat.service.config;
 
 import com.chat.service.redis.RedisSubscriber;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -34,5 +35,10 @@ public class RedisConfig {
         container.setConnectionFactory(connectionFactory);
         container.addMessageListener(listenerAdapter, new ChannelTopic("chatTopic"));
         return container;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 }
