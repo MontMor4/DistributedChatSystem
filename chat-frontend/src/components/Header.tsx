@@ -1,10 +1,13 @@
 import {Link} from '@tanstack/react-router'
 
 import {useState} from 'react'
-import {ChevronDown, ChevronRight, Home, Menu, Network, SquareFunction, StickyNote, X} from 'lucide-react'
+import {ChevronDown, ChevronRight, Home, Menu, Network, SquareFunction, StickyNote, X, MessageSquare, LogOut} from 'lucide-react'
+import { useServerFn } from '@tanstack/react-start'
+import { logoutFn } from '@/service/logout'
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false)
+    const logout = useServerFn(logoutFn)
     const [groupedExpanded, setGroupedExpanded] = useState<
         Record<string, boolean>
     >({})
@@ -28,6 +31,14 @@ export default function Header() {
                         />
                     </Link>
                 </h1>
+                <button
+                    onClick={() => logout()}
+                    className="ml-auto p-2 hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
+                    aria-label="Logout"
+                >
+                    <LogOut size={20}/>
+                    <span className="hidden sm:inline">Logout</span>
+                </button>
             </header>
 
             <aside
@@ -58,6 +69,19 @@ export default function Header() {
                     >
                         <Home size={20}/>
                         <span className="font-medium">Home</span>
+                    </Link>
+
+                    <Link
+                        to="/chat"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+                        activeProps={{
+                            className:
+                                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+                        }}
+                    >
+                        <MessageSquare size={20}/>
+                        <span className="font-medium">Chat</span>
                     </Link>
 
                     {/* Demo Links Start */}
