@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { ChatSidebar } from '@/components/ChatSidebar'
 import { ChatWindow } from '@/components/ChatWindow'
 import { Client } from "@stomp/stompjs"
-import { getUsersFn, getMessagesFn, getUserSessionFn, ChatHistoryResponse } from "@/lib/api"
+import { usersQueryOptions, messagesQueryOptions, userSessionQueryOptions, ChatHistoryResponse } from "@/lib/api"
 import { ChatSession } from "@/data/mock-chat"
 import { env } from "@/env"
 
@@ -19,25 +19,15 @@ function ChatPage() {
     const [connected, setConnected] = useState(false);
 
     // Fetch current user from session
-    const { data: currentUserData } = useQuery({
-        queryKey: ['session'],
-        queryFn: () => getUserSessionFn(),
-    });
+    const { data: currentUserData } = useQuery(userSessionQueryOptions());
 
     const currentUser = currentUserData ? { id: currentUserData.userId, ...currentUserData } : null;
 
     // Fetch users
-    const { data: users } = useQuery({
-        queryKey: ['users'],
-        queryFn: () => getUsersFn(),
-    });
+    const { data: users } = useQuery(usersQueryOptions());
 
     // Fetch messages for selected user
-    const { data: historyData } = useQuery({
-        queryKey: ['messages', selectedUserId],
-        queryFn: () => selectedUserId ? getMessagesFn({ data: selectedUserId }) : Promise.resolve(null),
-        enabled: !!selectedUserId
-    });
+    const { data: historyData } = useQuery(messagesQueryOptions(selectedUserId));
 
     // WebSocket connection
     useEffect(() => {

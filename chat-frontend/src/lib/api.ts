@@ -2,6 +2,7 @@ import axios from "axios";
 import { env } from "@/env";
 import { createServerFn } from "@tanstack/react-start";
 import { useAppSession } from "@/lib/session";
+import { queryOptions } from "@tanstack/react-query";
 
 const AUTH_BASE = env.VITE_API_AUTH;
 const CHAT_BASE = env.VITE_API_CHAT;
@@ -47,6 +48,11 @@ export const getUsersFn = createServerFn({ method: "GET" }).handler(
   }
 );
 
+export const usersQueryOptions = () => queryOptions({
+  queryKey: ['users'],
+  queryFn: () => getUsersFn(),
+});
+
 export const getMessagesFn = createServerFn({ method: "GET" })
   .inputValidator((d: string) => d)
   .handler(async ({ data: recipientId }) => {
@@ -67,9 +73,20 @@ export const getMessagesFn = createServerFn({ method: "GET" })
     return response.data;
   });
 
+export const messagesQueryOptions = (recipientId: string | undefined) => queryOptions({
+  queryKey: ['messages', recipientId],
+  queryFn: () => recipientId ? getMessagesFn({ data: recipientId }) : Promise.resolve(null),
+  enabled: !!recipientId,
+});
+
 export const getUserSessionFn = createServerFn({ method: "GET" }).handler(
   async () => {
     const session = await useAppSession();
     return session.data;
   }
 );
+
+export const userSessionQueryOptions = () => queryOptions({
+  queryKey: ['session'],
+  queryFn: () => getUserSessionFn(),
+});
