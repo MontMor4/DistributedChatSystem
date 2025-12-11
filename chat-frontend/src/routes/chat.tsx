@@ -28,8 +28,8 @@ export const Route = createFileRoute('/chat')({
     }
     
     await Promise.all([
-      // queryClient.ensureQueryData(usersQueryOptions()),
-      // userId ? queryClient.ensureQueryData(messagesQueryOptions(userId)) : Promise.resolve(),
+      queryClient.ensureQueryData(usersQueryOptions()),
+      userId ? queryClient.ensureQueryData(messagesQueryOptions(userId)) : Promise.resolve(),
     ])
   },
   component: ChatPage,

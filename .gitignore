@@ -1,3 +1,27 @@
+# Global
+.DS_Store
+.vscode/
+.idea/
+*.log
 .env
-node_modules
-target
+
+# Java / Maven (auth-service, chat-service)
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+.mvn/wrapper/maven-wrapper.jar
+dependency-reduced-pom.xml
+
+# Node / Frontend (chat-frontend)
+node_modules/
+dist/
+!.env.example
+coverage/
+.pnpm-store/
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
