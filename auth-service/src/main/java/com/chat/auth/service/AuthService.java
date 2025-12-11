@@ -3,6 +3,7 @@ package com.chat.auth.service;
 import com.chat.auth.dto.AuthResponse;
 import com.chat.auth.dto.LoginRequest;
 import com.chat.auth.dto.RegisterRequest;
+import com.chat.auth.dto.UserResponse;
 import com.chat.auth.exception.UserAlreadyExistsException;
 import com.chat.auth.exception.UserNotFoundException;
 import com.chat.auth.model.User;
@@ -13,6 +14,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +54,11 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(user.getUsername(), user.getId());
         return new AuthResponse(token, user.getId(), user.getUsername());
+    }
+
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserResponse(user.getId(), user.getUsername(), user.getFullName()))
+                .collect(Collectors.toList());
     }
 }

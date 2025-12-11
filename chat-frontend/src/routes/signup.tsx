@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { createServerFn, useServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { SignupForm } from "@/components/SignupForm";
@@ -29,9 +29,12 @@ export const signupFn = createServerFn({ method: "POST" })
 			userId: res.userId,
 		});
 
-		throw redirect({
-			href: "/",
-		});
+        return {
+            token: res.token,
+            userId: res.userId,
+            username: data.username,
+            fullName: data.fullName
+        };
 	});
 
 export const Route = createFileRoute("/signup")({
@@ -39,9 +42,19 @@ export const Route = createFileRoute("/signup")({
 });
 
 function RouteComponent() {
+    const navigate = useNavigate();
 	const signup = useServerFn(signupFn);
 	const signupMutation = useMutation({
 		mutationFn: signup,
+        onSuccess: (data) => {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify({
+                id: data.userId,
+                username: data.username,
+                fullName: data.fullName
+            }));
+            navigate({ to: "/" });
+        }
 	});
 
 	function onSubmit(e: React.FormEvent<HTMLFormElement>) {
