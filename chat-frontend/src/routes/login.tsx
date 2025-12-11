@@ -43,12 +43,7 @@ function RouteComponent() {
 	const login = useServerFn(loginFn);
 	const loginMutation = useMutation({
 		mutationFn: login,
-        onSuccess: (data) => {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify({
-                id: data.userId,
-                username: data.username
-            }));
+        onSuccess: () => {
             navigate({ to: "/" });
         }
 	});

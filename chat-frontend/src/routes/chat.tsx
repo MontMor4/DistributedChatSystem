@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { ChatSidebar } from '@/components/ChatSidebar'
 import { ChatWindow } from '@/components/ChatWindow'
 import { Client } from "@stomp/stompjs"
-import { fetchUsers, fetchMessages, ChatHistoryResponse } from "@/lib/api"
+import { getUsersFn, getMessagesFn, getUserSessionFn, ChatHistoryResponse } from "@/lib/api"
 import { ChatSession } from "@/data/mock-chat"
 import { env } from "@/env"
 
@@ -16,26 +16,26 @@ function ChatPage() {
     const queryClient = useQueryClient();
     const [selectedUserId, setSelectedUserId] = useState<string | undefined>();
     const [stompClient, setStompClient] = useState<Client | null>(null);
-    const [currentUser, setCurrentUser] = useState<any>(null);
     const [connected, setConnected] = useState(false);
 
-    useEffect(() => {
-        const userStr = localStorage.getItem("user");
-        if (userStr) {
-            setCurrentUser(JSON.parse(userStr));
-        }
-    }, []);
+    // Fetch current user from session
+    const { data: currentUserData } = useQuery({
+        queryKey: ['session'],
+        queryFn: () => getUserSessionFn(),
+    });
+
+    const currentUser = currentUserData ? { id: currentUserData.userId, ...currentUserData } : null;
 
     // Fetch users
     const { data: users } = useQuery({
         queryKey: ['users'],
-        queryFn: fetchUsers,
+        queryFn: () => getUsersFn(),
     });
 
     // Fetch messages for selected user
     const { data: historyData } = useQuery({
         queryKey: ['messages', selectedUserId],
-        queryFn: () => selectedUserId ? fetchMessages(selectedUserId) : Promise.resolve(null),
+        queryFn: () => selectedUserId ? getMessagesFn({ data: selectedUserId }) : Promise.resolve(null),
         enabled: !!selectedUserId
     });
 
