@@ -7,6 +7,7 @@ import com.chat.service.redis.RedisPublisher;
 import com.chat.service.repository.MessageRepository;
 import com.chat.service.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -20,6 +21,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ChatController {
 
     private final RedisPublisher redisPublisher;
@@ -28,6 +30,7 @@ public class ChatController {
 
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(@Payload ChatMessage chatMessage) {
+        log.info("Received message via WebSocket: {}", chatMessage);
         // 1. Save to MongoDB
         Message message = Message.builder()
                 .chatRoomId(chatMessage.getChatRoomId())
@@ -36,9 +39,12 @@ public class ChatController {
                 .timestamp(LocalDateTime.now())
                 .build();
         messageRepository.save(message);
+        log.info("Message saved to MongoDB: {}", message.getId());
 
         // 2. Publish to Redis (Distribute to other instances)
+        chatMessage.setTimestamp(message.getTimestamp());
         redisPublisher.publish(chatMessage);
+        log.info("Message published to Redis");
     }
 
     @GetMapping("/messages/{senderId}/{recipientId}")

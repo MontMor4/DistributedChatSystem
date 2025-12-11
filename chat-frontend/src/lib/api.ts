@@ -39,9 +39,11 @@ export const getUsersFn = createServerFn({ method: "GET" }).handler(
     const session = await useAppSession();
     const token = session.data.token;
 
-    // Allow public access or require auth? The prompt implies listing all registered people.
-    // Ideally authenticated.
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    if (!token) {
+      return [];
+    }
+
+    const headers = { Authorization: `Bearer ${token}` };
 
     const response = await authClient.get<User[]>("/users", { headers });
     return response.data;

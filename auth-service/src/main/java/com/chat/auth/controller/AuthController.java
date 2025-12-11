@@ -36,10 +36,4 @@ public class AuthController {
         log.info("Login request received {}", request);
         return ResponseEntity.ok(authService.login(request));
     }
-
-    @GetMapping("/users")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        log.info("Fetching all users");
-        return ResponseEntity.ok(authService.getAllUsers());
-    }
 }
