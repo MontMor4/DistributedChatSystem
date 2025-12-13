@@ -11,8 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface ChatRoomRepository extends MongoRepository<ChatRoom, String> {
-    List<ChatRoom> findByParticipantIdsContaining(UUID participantId);
-
     @Query("{ 'participantIds': { $all: ?0, $size: 2 } }")
     Optional<ChatRoom> findByParticipantIds(List<UUID> participantIds);
 }

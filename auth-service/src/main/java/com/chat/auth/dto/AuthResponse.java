@@ -1,8 +1,8 @@
 package com.chat.auth.dto;
 
-import lombok.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.UUID;
 
-public record AuthResponse(@NonNull String token, @NonNull UUID userId, @NonNull String username) {
+public record AuthResponse(@NotEmpty String token, @NotEmpty UUID userId, @NotEmpty String username) {
 }

@@ -1,5 +1,4 @@
 services:
-  # Relational Database for Auth Service
   postgres-db:
     image: postgres:16-alpine
     container_name: chat-postgres
@@ -15,7 +14,6 @@ services:
     networks:
       - chat-network
 
-  # NoSQL Database for Chat Service (Messages)
   mongo-db:
     image: mongo:7.0
     container_name: chat-mongo
@@ -30,7 +28,6 @@ services:
     networks:
       - chat-network
 
-  # Message Broker for Chat Service Scalability (Pub/Sub)
   redis-broker:
     image: redis:7.2-alpine
     container_name: chat-redis

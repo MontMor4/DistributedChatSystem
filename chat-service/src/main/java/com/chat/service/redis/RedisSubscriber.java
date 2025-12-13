@@ -23,8 +23,8 @@ public class RedisSubscriber implements MessageListener {
     public void onMessage(Message message, byte[] pattern) {
         log.info("Received message from Redis topic: {}", new String(message.getChannel()));
         ChatMessage chatMessage = objectMapper.readValue(message.getBody(), ChatMessage.class);
+
         log.info("Broadcasting message to WebSocket: /topic/room/{}", chatMessage.getChatRoomId());
-        // Broadcast to local WebSocket clients subscribed to this room
         messagingTemplate.convertAndSend("/topic/room/" + chatMessage.getChatRoomId(), chatMessage);
     }
 }

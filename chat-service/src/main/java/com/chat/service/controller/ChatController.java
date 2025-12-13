@@ -31,7 +31,7 @@ public class ChatController {
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(@Payload ChatMessage chatMessage) {
         log.info("Received message via WebSocket: {}", chatMessage);
-        // 1. Save to MongoDB
+
         Message message = Message.builder()
                 .chatRoomId(chatMessage.getChatRoomId())
                 .senderId(chatMessage.getSenderId())
@@ -41,7 +41,6 @@ public class ChatController {
         messageRepository.save(message);
         log.info("Message saved to MongoDB: {}", message.getId());
 
-        // 2. Publish to Redis (Distribute to other instances)
         chatMessage.setTimestamp(message.getTimestamp());
         redisPublisher.publish(chatMessage);
         log.info("Message published to Redis");

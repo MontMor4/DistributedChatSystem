@@ -57,17 +57,13 @@ export function SignupForm({
 								/>
 							</Field>
 							<Field>
-								<Field>
-									<Field>
-										<FieldLabel htmlFor={passwordId}>Password</FieldLabel>
-										<Input
-											id={passwordId}
-											name="password"
-											type="password"
-											required
-										/>
-									</Field>
-								</Field>
+								<FieldLabel htmlFor={passwordId}>Password</FieldLabel>
+								<Input
+									id={passwordId}
+									name="password"
+									type="password"
+									required
+								/>
 							</Field>
 							<Field>
 								<Button type="submit">Create Account</Button>
