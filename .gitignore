@@ -4,6 +4,7 @@
 .idea/
 *.log
 .env
+.idea
 
 # Java / Maven (auth-service, chat-service)
 target/
